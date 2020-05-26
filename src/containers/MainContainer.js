@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import MainMenu from '../components/MainMenu';
+import GameContainer from './game/GameContainer';
 
 class MainContainer extends Component {
 
@@ -31,7 +32,12 @@ class MainContainer extends Component {
             changeUserName={this.setNameFromMainMenu.bind(this)} />
           }}
         />
-
+        <Route path="/game"
+        render={(props) => {
+            return <GameContainer
+            userName={this.state.userName} />
+          }}
+        />
       </Router>
       </>
     )

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class MainMenu extends Component {
   
@@ -29,7 +30,9 @@ class MainMenu extends Component {
         <form>
           <input onChange={this.handleUserNameChange.bind(this)} type="text" placeholder="Enter your name" />
           <br></br>
-          <button onClick={this.onUserNameSubmit.bind(this)} type="submit">Start</button>
+          <Link to="/game"> 
+            <button onClick={this.onUserNameSubmit.bind(this)} type="button">Start</button>
+          </Link>
         </form>
       </>
     )
