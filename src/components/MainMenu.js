@@ -30,8 +30,9 @@ class MainMenu extends Component {
         <form>
           <input onChange={this.handleUserNameChange.bind(this)} type="text" placeholder="Enter your name" />
           <br></br>
-          <Link to="/game"> 
-            <button onClick={this.onUserNameSubmit.bind(this)} type="button">Start</button>
+          <button onClick={this.onUserNameSubmit.bind(this)} type="button">Save Name</button>
+          <Link to="/game/generate-quiz">
+              <button>Start Game</button>
           </Link>
         </form>
       </>

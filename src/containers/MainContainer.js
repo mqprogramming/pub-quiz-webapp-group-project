@@ -10,12 +10,7 @@ class MainContainer extends Component {
     this.state = {
       userName: ""
     }
-    this.handleUserName = this.handleUserName.bind(this);
     this.setNameFromMainMenu = this.setNameFromMainMenu.bind(this);
-  }
-
-  handleUserName(event) {
-    this.setState({ userName: event.target.value })
   }
 
   setNameFromMainMenu(newName){
