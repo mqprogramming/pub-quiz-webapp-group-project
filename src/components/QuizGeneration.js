@@ -19,8 +19,7 @@ class QuizGeneration extends Component {
           <h3>Generate Quiz</h3>
           <form>
             <label>Choose the number of questions</label>
-            <input onChange={this.handleNumberOfQuestionsChange} type="range" min="1" max="5" defaultValue="1" />
-
+            <input onChange={this.handleNumberOfQuestionsChange} type="range" min="1" max="20" defaultValue="1" />
             <br></br>
             <button onClick={this.props.onButtonPress}>Generate Quiz</button>
           </form>

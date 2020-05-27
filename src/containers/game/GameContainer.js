@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Request from '../../helpers/request';
 import QuizGeneration from '../../components/QuizGeneration';
 import GameView from '../../components/GameView';
+import ScoreBoard from '../../components/ScoreBoard';
 
 class GameContainer extends Component {
   
@@ -15,8 +16,7 @@ class GameContainer extends Component {
       questionCounter: 0,
 
       score: 0,
-      showPlayQuizButton: false,
-      showScoreBoard: false
+      showPlayQuizButton: false
     }
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.checkAnswer = this.checkAnswer.bind(this);
@@ -47,17 +47,32 @@ class GameContainer extends Component {
       }
       const newCounter = this.state.questionCounter + 1;
       this.setState({ questionCounter: newCounter })
-
-      this.setState({ showScoreBoard: true })
     }
-  } 
+
+  }
+  
+  resetQuiz(){
+    this.setState({
+      numberOfQuestions: 1,
+      questions: [],
+      questionCounter: 0,
+
+      score: 0,
+      showPlayQuizButton: false
+    })
+  }
   
   render(){
     return(
       <Router>
         <Route path="/game/play-quiz"
           render={(props) => {
-            return <GameView questions={this.state.questions} questionCounter={this.state.questionCounter} score={this.state.score} showScore={this.state.showScoreBoard} checkAnswer={this.checkAnswer.bind(this)} />
+            return <GameView
+            questions={this.state.questions}
+            questionCounter={this.state.questionCounter}
+            score={this.state.score}
+            showScore={this.state.showScoreBoard}
+            checkAnswer={this.checkAnswer.bind(this)} />
           }}
         />
 
@@ -65,6 +80,17 @@ class GameContainer extends Component {
           render={(props) => {
             return <QuizGeneration handleSliderChange={this.changeNumberOfQuestionsRequested}
               onButtonPress={this.fetchQuestions.bind(this)} reveal={this.state.showPlayQuizButton}/>
+          }}
+        />
+
+        <Route path="/game/final-score"
+          render={(props) => {
+            return <ScoreBoard 
+            userName={this.props.userName}
+            score={this.state.score}
+            numberOfQuestions={this.state.numberOfQuestions}
+            resetQuiz={this.resetQuiz.bind(this)}
+            />
           }}
         />
       </Router>

@@ -30,7 +30,7 @@ class GameView extends Component {
     const regexQuot = /(&quot;)/g
     const regexAmp = /(&amp;)/g
     
-    let str1 = str.replace(regexApo, "\'");
+    let str1 = str.replace(regexApo, "'");
     let str2 = str1.replace(regexLt, "<");
     let str3 = str2.replace(regexGt, ">");
     let str4 = str3.replace(regexQuot, "\"");
@@ -66,6 +66,13 @@ class GameView extends Component {
           <h2>Go back to <Link to="/game/generate-quiz">generate a quiz</Link>.</h2>
         </>
       )
+    } else if (this.props.questionCounter === this.props.questions.length) {
+      return (
+        <>
+          <h1>Quiz Finished!</h1>
+          <h2>Go to <Link to="/game/final-score"> final scoreboard</Link>.</h2>
+        </>
+      )
     } else {
 
       const allAnswers = this.getAllAnswers();
@@ -74,19 +81,9 @@ class GameView extends Component {
       for (const [index, answer] of allAnswers.entries()){
         answersArray.push(
           <div key={index}>
-            <input value={answer} type="radio" name="response" onChange={this.chooseAnswer}/>
+            <input value={answer} type="radio" name="response" onClick={this.chooseAnswer}/>
             <label>{allAnswers[index]}</label>
             <br></br>
-          </div>
-        )
-      }
-
-      const scoreArray = [];
-      if (this.props.showScore === true) {
-        scoreArray.push(
-          <div key="key">
-            <h3>Score: </h3>
-            <p>{this.props.score}</p>
           </div>
         )
       }
@@ -97,7 +94,8 @@ class GameView extends Component {
           <form>
             {answersArray}
           </form>
-            {scoreArray}
+          <h3>Score: </h3>
+          <p>{this.props.score}</p>
         </>
       )
     }
