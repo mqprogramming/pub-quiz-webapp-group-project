@@ -1,6 +1,10 @@
 import { withRouter } from 'react-router'
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { Grid } from '@material-ui/core';
 
 class MainMenu extends Component {
   
@@ -23,12 +27,27 @@ class MainMenu extends Component {
   render(){
     return(
       <>
-        <h3>Pub Quiz Main Menu</h3>
-        <form>
-          <input onChange={this.handleUserNameChange.bind(this)} type="text" placeholder="Enter your name" />
-          <br></br>
-          <button onClick={this.onUserNameSubmit.bind(this)} type="button">Start Quizzin'</button>
-        </form>
+        <Grid container direction="column" spacing={5} align="center" justify="center" style={{ backgroundColor: '#FAEDCA' }} >
+
+        <Grid item>
+            <Typography variant="h3">Pub Quiz Main Menu</Typography>
+          </Grid>
+
+          <Grid item> 
+            <form>
+              <TextField onChange={this.handleUserNameChange.bind(this)} type="text" placeholder="Enter your name" />
+              <Button onClick={this.onUserNameSubmit.bind(this)} type="button">Save Name</Button> 
+            </form>
+          </Grid>
+
+          <Grid item>
+            <Link to="/game/generate-quiz" style={{ textDecoration: 'none'}}>
+                <Button variant="contained" color="primary">Start Game</Button>
+            </Link>
+          </Grid>
+
+
+        </Grid>
       </>
     )
   }    
