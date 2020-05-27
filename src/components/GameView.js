@@ -158,7 +158,6 @@ class GameView extends Component {
       )
     }
   }
-
 }
 
 export default GameView;
