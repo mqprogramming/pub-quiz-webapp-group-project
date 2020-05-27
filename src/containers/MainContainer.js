@@ -24,13 +24,13 @@ class MainContainer extends Component {
         <Route exact path="/" 
         render={(props) => {
             return <MainMenu 
-            changeUserName={this.setNameFromMainMenu.bind(this)} />
+            changeUserName={ this.setNameFromMainMenu.bind(this) } />
           }}
         />
         <Route path="/game"
         render={(props) => {
             return <GameContainer
-            userName={this.state.userName} />
+            userName={ this.state.userName } />
           }}
         />
       </Router>
