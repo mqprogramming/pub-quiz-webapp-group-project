@@ -55,11 +55,14 @@ class GameContainer extends Component {
 
   checkAnswer(answer) {
     if (this.state.questions[this.state.questionCounter].correct_answer === answer) {
+      console.log("correct!")
       const newScore = this.state.score + 1;
       this.setState({ score: newScore })
     }
     const newCounter = this.state.questionCounter + 1;
     this.setState({ questionCounter: newCounter })
+
+    this.setState({ showScoreBoard: true })
   }
   
   render(){

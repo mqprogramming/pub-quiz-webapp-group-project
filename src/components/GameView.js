@@ -8,6 +8,7 @@ class GameView extends Component {
 
     this.getAllAnswers = this.getAllAnswers.bind(this);
     this.shuffle = this.shuffle.bind(this);
+    this.chooseAnswer = this.chooseAnswer.bind(this);
   }
 
   shuffle(a) {
@@ -23,9 +24,9 @@ class GameView extends Component {
 
   getAllAnswers(){
     let allAnswers = [];
-    allAnswers.push(this.props.questions[0].correct_answer);
-    
-    let incorrectAnswers = this.props.questions[0].incorrect_answers;
+    allAnswers.push(this.props.questions[this.props.questionCounter].correct_answer);
+
+    let incorrectAnswers = this.props.questions[this.props.questionCounter].incorrect_answers;
     for (const incorrectAnswer of incorrectAnswers) {
       allAnswers.push(incorrectAnswer);
     }
@@ -33,6 +34,9 @@ class GameView extends Component {
     return this.shuffle(allAnswers);
   }
 
+  chooseAnswer(event){
+    this.props.checkAnswer(event.target.value);
+  }
 
   render(){
 
@@ -44,14 +48,6 @@ class GameView extends Component {
           <h2>Go back to <Link to="/game/generate-quiz">generate a quiz</Link>.</h2>
         </>
       )
-    } else if (this.props.showScore === true) {
-
-      return (
-        <div>
-          <h3>Score: </h3>
-          <p>{this.props.score}</p>
-        </div>
-      )
     } else {
 
       const allAnswers = this.getAllAnswers();
@@ -60,19 +56,30 @@ class GameView extends Component {
       for (const [index, answer] of allAnswers.entries()){
         answersArray.push(
           <div key={index}>
-            <input value="Answer" type="radio" name="response" />
+            <input value={answer} type="radio" name="response" onChange={this.chooseAnswer}/>
             <label>{allAnswers[index]}</label>
             <br></br>
           </div>
         )
       }
 
+      const scoreArray = [];
+      if (this.props.showScore === true) {
+        scoreArray.push(
+          <div key="key">
+            <h3>Score: </h3>
+            <p>{this.props.score}</p>
+          </div>
+        )
+      }
+
       return (
         <>
-          <h3>{this.props.questions[0].question}</h3>
+          <h3>{this.props.questions[this.props.questionCounter].question}</h3>
           <form>
             {answersArray}
           </form>
+            {scoreArray}
         </>
       )
     }
