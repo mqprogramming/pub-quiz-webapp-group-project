@@ -11,7 +11,7 @@ class GameView extends Component {
     if (this.props.questions.length === 0){
       return ( 
         <>
-          <h1>There are no questions!</h1>
+          <h1>There are no questions</h1>
           <h2>Go back to <Link to="/game/generate-quiz">generate a quiz</Link>.</h2>
         </>
       )
