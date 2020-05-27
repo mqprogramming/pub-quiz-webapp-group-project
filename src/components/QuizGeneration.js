@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {Typography, Slider, Grid, Box, Button} from '@material-ui/core';
-import { styled } from '@material-ui/core/styles';
+import { Typography, Slider, Grid, Box, Button } from '@material-ui/core';
+import { styled, makeStyles } from '@material-ui/core/styles';
+import { InputLabel, MenuItem, FormHelperText, FormControl, Select } from '@material-ui/core';
 
 class QuizGeneration extends Component {
   
   constructor(props){
     super(props);
     this.handleNumberOfQuestionsChange = this.handleNumberOfQuestionsChange.bind(this);
+    this.handleCategory = this.handleCategory.bind(this);
   }
 
   handleNumberOfQuestionsChange(event, value){
     this.props.handleSliderChange(value)
+  }
+
+  handleCategory(value){
+    this.props.onCategorySelect(value)
   }
 
   render(){
@@ -27,19 +33,27 @@ class QuizGeneration extends Component {
     });
 
     if (this.props.reveal === false) {
+
+      const categoryArray = [];
+      for (const category of this.props.categories) {
+        categoryArray.push(
+          <option value={category.id}>{category.name}</option>
+        ); 
+      }
+
+
       return (
         <>
           <Grid container direction="column" spacing={2} align="center" justify="center" style={{ backgroundColor: '#FAEDCA' }} >
 
             <Grid item>
-                <Typography variant="h3">Generate Quiz</Typography>
+                <Box pb={3}>
+                  <Typography variant="h3">Generate Quiz</Typography>
+                </Box>
               </Grid>
 
               <Grid item>
-                <Typography variant="subtitle1">Choose the number of questions</Typography>
-              </Grid>
-
-              <Grid item>
+              <Typography variant="subtitle1">Choose the number of questions</Typography>
                 <Box width={300} p={2}>
                   <Slider
                   defaultValue={1}
@@ -52,6 +66,15 @@ class QuizGeneration extends Component {
                   min={1}
                   max={20}
                 />
+              </Box>
+            </Grid>
+            
+            <Grid item >
+              <Box pb={4}>
+                <Typography variant="subtitle1"><label for="category">Choose a Category:</label></Typography>
+                <select name="category" id="category" onChange={this.handleCategory}>
+                  {categoryArray}
+                </select>
               </Box>
             </Grid>
 

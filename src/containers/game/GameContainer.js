@@ -15,6 +15,9 @@ class GameContainer extends Component {
       numberOfQuestions: 1,
       questions: [],
       questionCounter: 0,
+      
+      categories: [],
+      category: "",
 
       score: 0,
       showPlayQuizButton: false
@@ -22,6 +25,15 @@ class GameContainer extends Component {
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.checkAnswer = this.checkAnswer.bind(this);
     this.changeNumberOfQuestionsRequested = this.changeNumberOfQuestionsRequested.bind(this);
+    this.handleCategory = this.handleCategory.bind(this);
+  }
+
+  componentDidMount(){
+    const request = new Request();
+    request.get('https://opentdb.com/api_category.php')
+    .then((data) => {
+      this.setState({ categories: data.trivia_categories} )
+    })
   }
 
   changeNumberOfQuestionsRequested(data){
@@ -30,10 +42,16 @@ class GameContainer extends Component {
     )
   }
 
+  handleCategory(event){
+    this.setState(
+      { category: event.target.value }
+    )
+  }
+
   fetchQuestions(event) {
     event.preventDefault();
     const request = new Request();
-    request.get(`https://opentdb.com/api.php?amount=${this.state.numberOfQuestions}`)
+    request.get(`https://opentdb.com/api.php?amount=${this.state.numberOfQuestions}&category=${this.state.category}`)
     .then((data) => {
       this.setState({ questions: data.results})
     })
@@ -80,8 +98,13 @@ class GameContainer extends Component {
 
         <Route path="/game/generate-quiz"
           render={(props) => {
-            return <QuizGeneration handleSliderChange={this.changeNumberOfQuestionsRequested}
-              onButtonPress={this.fetchQuestions.bind(this)} reveal={this.state.showPlayQuizButton}/>
+            return <QuizGeneration 
+              handleSliderChange={this.changeNumberOfQuestionsRequested}
+              onButtonPress={this.fetchQuestions.bind(this)} 
+              reveal={this.state.showPlayQuizButton}
+              categories={this.state.categories}
+              onCategorySelect={this.handleCategory.bind(this)}
+              />
           }}
         />
 
@@ -104,3 +127,5 @@ class GameContainer extends Component {
 }
 
 export default GameContainer;
+
+// 'https://opentdb.com/api_category.php'
