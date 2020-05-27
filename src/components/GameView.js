@@ -17,6 +17,15 @@ class GameView extends Component {
       )
     }
 
+    if (this.props.showScore === true) {
+      return (
+        <div>
+          <h3>Score: </h3>
+          <p>{this.props.score}</p>
+        </div>
+      )
+    }
+
     return(
       <>
         <h3>{this.props.questions[0].question}</h3>

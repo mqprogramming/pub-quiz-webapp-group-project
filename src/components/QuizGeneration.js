@@ -12,7 +12,6 @@ class QuizGeneration extends Component {
     this.props.handleSliderChange(event.target.value)
   }
 
-  
   render(){
     if (this.props.reveal === false) {
       return (

@@ -16,7 +16,8 @@ class GameContainer extends Component {
       currentQuestion: {},
       usedQuestions: [],
       score: 0,
-      showPlayQuizButton: false
+      showPlayQuizButton: false,
+      showScoreBoard: false
     }
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.changeNumberOfQuestionsRequested = this.changeNumberOfQuestionsRequested.bind(this);
@@ -24,7 +25,7 @@ class GameContainer extends Component {
 
   changeNumberOfQuestionsRequested(data){
     this.setState(
-      { numberOfQuestions: data}
+      { numberOfQuestions: data }
     )
   }
 
@@ -54,16 +55,16 @@ class GameContainer extends Component {
       <Router>
         <Route path="/game/play-quiz"
           render={(props) => {
-            return <GameView questions={this.state.questions}/>
+            return <GameView questions={this.state.questions} score={this.state.score} showScore={this.state.showScoreBoard}/>
           }}
         />
+
         <Route path="/game/generate-quiz"
           render={(props) => {
             return <QuizGeneration handleSliderChange={this.changeNumberOfQuestionsRequested}
               onButtonPress={this.fetchQuestions.bind(this)} reveal={this.state.showPlayQuizButton}/>
           }}
         />
-        
       </Router>
     )
   }
