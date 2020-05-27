@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Request from '../../helpers/request';
 import QuizGeneration from '../../components/QuizGeneration';
 import GameView from '../../components/GameView';
 import ScoreBoard from '../../components/ScoreBoard';
+import ErrorPage from '../../components/ErrorPage';
 
 class GameContainer extends Component {
   
@@ -65,6 +66,7 @@ class GameContainer extends Component {
   render(){
     return(
       <Router>
+        <Switch>
         <Route path="/game/play-quiz"
           render={(props) => {
             return <GameView
@@ -93,6 +95,8 @@ class GameContainer extends Component {
             />
           }}
         />
+        <Route component={ErrorPage} />
+        </Switch>
       </Router>
     )
   }
@@ -100,25 +104,3 @@ class GameContainer extends Component {
 }
 
 export default GameContainer;
-
-/*
-
-function parseHtmlEnteties(str) {
-    return str.replace(/&#([0-9]{1,3});/gi, function(match, numStr) {
-        var num = parseInt(numStr, 10); // read num as normal number
-        return String.fromCharCode(num);
-    });
-}
-
-*/
-
-/*
-
-(str) => {
-  return str.replace(/&#([0-9]{1,3});/gi, function(match, numStr) {
-      var num = parseInt(numStr, 10);
-        return String.fromCharCode(num);
-    });
-}
-
-*/

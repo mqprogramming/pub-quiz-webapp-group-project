@@ -1,6 +1,8 @@
 import { withRouter } from 'react-router'
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {Typography, Grid, Button} from '@material-ui/core';
+import { styled } from '@material-ui/core/styles';
 
 class ScoreBoard extends Component {
 
@@ -21,23 +23,56 @@ class ScoreBoard extends Component {
     const quipArray = [];
   
     if (percentage < 0.2) {
-      quipArray.push(<h3 key="key">You did real bad, {this.props.userName}!</h3>)
+        quipArray.push(<Typography variant="subtitle1" key="key">You did real bad, {this.props.userName}!</Typography>)
+        quipArray.push(<Typography variant="subtitle1" key="key">You are kinda rubbish, {this.props.userName}!</Typography>)
     } else if (percentage >= 0.2 && percentage < 0.4) {
-      quipArray.push(<h3 key="key">You did alright..., {this.props.userName}</h3>)
+        quipArray.push(<Typography variant="subtitle1" key="key">You did alright, {this.props.userName}...</Typography>)
+        quipArray.push(<Typography variant="subtitle1" key="key">You did fine I suppose, {this.props.userName}!</Typography>)
+        quipArray.push(<Typography variant="subtitle1" key="key">You are pretty mediocre, {this.props.userName}!</Typography>)
     } else if (percentage >= 0.4 && percentage < 0.6) {
-      quipArray.push(<h3 key="key">You did kinda good, actually, {this.props.userName}!</h3>)
+        quipArray.push(<Typography variant="subtitle1" key="key">You did kinda good, actually, {this.props.userName}!</Typography>)
+        quipArray.push(<Typography variant="subtitle1" key="key">You did kinda good, actually, {this.props.userName}!</Typography>)
+        quipArray.push(<Typography variant="subtitle1" key="key">You did kinda good, actually, {this.props.userName}!</Typography>)
     } else if (percentage >= 0.8 && percentage < 0.9) {
-      quipArray.push(<h3 key="key">Wow, I'm actually fairly impressed with you, {this.props.userName}!</h3>)
+        quipArray.push(<Typography variant="subtitle1" key="key">Wow, I'm actually fairly impressed with you, {this.props.userName}!</Typography>)
+        quipArray.push(<Typography variant="subtitle1" key="key">Wow, I'm actually fairly impressed with you, {this.props.userName}!</Typography>)
+        quipArray.push(<Typography variant="subtitle1" key="key">Wow, I'm actually fairly impressed with you, {this.props.userName}!</Typography>)
     } else if (percentage >= 0.9) {
-      quipArray.push(<h3 key="key">You're a trivia god, {this.props.userName}! Join my pub quiz team, we're calling it "{this.props.userName} Is Our Lord And Saviour"!!!</h3>)
-    } 
+        quipArray.push(<h3 key="key">You're a trivia god, {this.props.userName}! Join my pub quiz team, we're calling it "{this.props.userName} Is Our Lord And Saviour"!!!</h3>)
+        quipArray.push(<h3 key="key">You're a trivia god, {this.props.userName}! Join my pub quiz team, we're calling it "{this.props.userName} Is Our Lord And Saviour"!!!</h3>)
+        quipArray.push(<h3 key="key">You're a trivia god, {this.props.userName}! Join my pub quiz team, we're calling it "{this.props.userName} Is Our Lord And Saviour"!!!</h3>)
+    }
+
+    const GradientButton = styled(Button)({
+        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+        border: 0,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        color: 'white',
+        height: 48,
+        padding: '0 30px',
+      });
 
     return (
       <>
-        <h1>Final Score</h1>
-        <h2>{this.props.score}/{this.props.numberOfQuestions}</h2>
-        {quipArray}
-        <button onClick={this.onPlayAgain.bind(this)} type="button">Play Again</button>
+        <Grid container direction="column" spacing={4} align="center" justify="center" style={{ backgroundColor: '#FAEDCA' }} >
+
+            <Grid item>
+            <Typography variant="h4">Final Score</Typography>
+            </Grid>
+
+            <Grid item>
+                <Typography variant="h2">{this.props.score}/{this.props.numberOfQuestions}</Typography>
+            </Grid>
+            
+            <Grid item>
+            <Typography variant="h6"> {quipArray[Math.floor(Math.random() * quipArray.length)]}</Typography>
+            </Grid>
+
+            <Grid item>
+                <GradientButton onClick={this.onPlayAgain.bind(this)} type="button">Play Again</GradientButton>
+            </Grid>
+        </Grid>
       </>
     )
   }

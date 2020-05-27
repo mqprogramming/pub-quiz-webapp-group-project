@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {Typography, Grid, Box} from '@material-ui/core';
+import {Radio, RadioGroup, FormControlLabel, FormControl, Card, CardContent} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 class GameView extends Component {
 
@@ -29,13 +32,15 @@ class GameView extends Component {
     const regexGt = /(&gt;)/g
     const regexQuot = /(&quot;)/g
     const regexAmp = /(&amp;)/g
+    const regexPokeE = /(&eacute;)/g
     
     let str1 = str.replace(regexApo, "'");
     let str2 = str1.replace(regexLt, "<");
     let str3 = str2.replace(regexGt, ">");
     let str4 = str3.replace(regexQuot, "\"");
     let str5 = str4.replace(regexAmp, "&");
-    return str5;
+    let str6 = str5.replace(regexAmp, "é");
+    return str6;
   } 
 
   getAllAnswers(){
@@ -58,19 +63,48 @@ class GameView extends Component {
 
   render(){
 
+    const useStyles = makeStyles({
+      root: {
+        minWidth: 275,
+      },
+      bullet: {
+        display: 'inline-block',
+        margin: '0 2px',
+        transform: 'scale(0.8)',
+      },
+      title: {
+        fontSize: 14,
+      },
+      pos: {
+        marginBottom: 12,
+      },
+    });
+
     if (this.props.questions.length === 0){
 
       return ( 
         <>
-          <h1>There are no questions!</h1>
-          <h2>Go back to <Link to="/game/generate-quiz">generate a quiz</Link>.</h2>
+          <Grid container direction="column" spacing={2} align="center" justify="center" style={{ backgroundColor: '#FAEDCA' }} >
+            <Grid item>
+                <Typography variant="h2">There are no questions!</Typography>
+            </Grid>
+            <Grid item>
+                <Typography variant="h4">Go back to <Link to="/game/generate-quiz">generate a quiz</Link>.</Typography>
+            </Grid>
+          </Grid>
         </>
       )
     } else if (this.props.questionCounter === this.props.questions.length) {
       return (
         <>
-          <h1>Quiz Finished!</h1>
-          <h2>Go to <Link to="/game/final-score"> final scoreboard</Link>.</h2>
+          <Grid container direction="column" spacing={2} align="center" justify="center" style={{ backgroundColor: '#FAEDCA' }} >
+              <Grid item>
+                <Typography variant="h2">Quiz Finished!</Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="h5">Go to <Link to="/game/final-score"> final scoreboard</Link>.</Typography>
+              </Grid>
+          </Grid>
         </>
       )
     } else {
@@ -80,22 +114,46 @@ class GameView extends Component {
       const answersArray = [];
       for (const [index, answer] of allAnswers.entries()){
         answersArray.push(
-          <div key={index}>
-            <input value={answer} type="radio" name="response" onClick={this.chooseAnswer}/>
-            <label>{allAnswers[index]}</label>
-            <br></br>
-          </div>
+          <FormControlLabel value={answer} control={<Radio />} label={allAnswers[index]} onClick={this.chooseAnswer} />
         )
       }
 
       return (
         <>
-          <h3>{this.parseHtmlEntities(this.props.questions[this.props.questionCounter].question)}</h3>
-          <form>
-            {answersArray}
-          </form>
-          <h3>Score: </h3>
-          <p>{this.props.score}</p>
+          <Grid container direction="column" spacing={4} align="center" justify="center" style={{ backgroundColor: '#FAEDCA' }} >
+
+          <Grid item>
+            <Box width="600px">
+                <Typography variant="h5"> {this.parseHtmlEntities(this.props.questions[this.props.questionCounter].question)}</Typography>
+            </Box>
+          </Grid>
+          
+          <Grid item>
+            <Box width="500px" p={4} style={{ backgroundColor: '#FEF9D7' }}>
+              <FormControl component="fieldset">
+                <RadioGroup aria-label="answers" name="answers">
+                  {answersArray}
+                </RadioGroup>
+              </FormControl>
+            </Box>
+          </Grid> 
+
+          <Grid item>
+              <Box width="300px">
+                <Card style={{ backgroundColor: '#FFFCDA' }} >
+                  <CardContent>
+                    <Typography variant="h5">
+                      Score:
+                    </Typography>
+                    <Typography>
+                      {this.props.score}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Box>
+            </Grid>
+
+          </Grid>
         </>
       )
     }

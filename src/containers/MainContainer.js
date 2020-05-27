@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MainMenu from '../components/MainMenu';
 import GameContainer from './game/GameContainer';
+import ErrorPage from '../components/ErrorPage';
 
 class MainContainer extends Component {
 
@@ -21,6 +22,7 @@ class MainContainer extends Component {
     return(
       <>
       <Router>
+      <Switch>
         <Route exact path="/" 
         render={(props) => {
             return <MainMenu 
@@ -33,6 +35,8 @@ class MainContainer extends Component {
             userName={this.state.userName} />
           }}
         />
+        <Route component={ErrorPage} />
+        </Switch>
       </Router>
       </>
     )
