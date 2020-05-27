@@ -13,13 +13,16 @@ class GameContainer extends Component {
     this.state = {
       numberOfQuestions: 1,
       questions: [],
-      currentQuestion: {},
-      usedQuestions: [],
+      questionCounter: 0,
+      // currentQuestion: {},
+      // usedQuestions: [],
       score: 0,
       showPlayQuizButton: false,
       showScoreBoard: false
     }
     this.fetchQuestions = this.fetchQuestions.bind(this);
+    // this.replaceQuestion = this.replaceQuestion.bind(this);
+    this.checkAnswer = this.checkAnswer.bind(this);
     this.changeNumberOfQuestionsRequested = this.changeNumberOfQuestionsRequested.bind(this);
   }
 
@@ -40,14 +43,23 @@ class GameContainer extends Component {
     .then((more) => (this.setState({ showPlayQuizButton: true })))
   }
 
-  replaceQuestion(){
-    this.state.usedQuestions.add(this.state.currentQuestion);
+  // replaceQuestion(){
+  //   this.state.usedQuestions.add(this.state.currentQuestion);
 
-    for (const question in this.state.questions){
-      if (this.state.usedQuestions.find(someQuestion => someQuestion !== question)) {
-        this.setState({ currentQuestion: question })
-      }
+  //   for (const question in this.state.questions){
+  //     if (this.state.usedQuestions.find(someQuestion => someQuestion !== question)) {
+  //       this.setState({ currentQuestion: question })
+  //     }
+  //   }
+  // }
+
+  checkAnswer(answer) {
+    if (this.state.questions[this.state.questionCounter].correct_answer === answer) {
+      const newScore = this.state.score + 1;
+      this.setState({ score: newScore })
     }
+    const newCounter = this.state.questionCounter + 1;
+    this.setState({ questionCounter: newCounter })
   }
   
   render(){
@@ -55,7 +67,7 @@ class GameContainer extends Component {
       <Router>
         <Route path="/game/play-quiz"
           render={(props) => {
-            return <GameView questions={this.state.questions} score={this.state.score} showScore={this.state.showScoreBoard}/>
+            return <GameView questions={this.state.questions} questionCounter={this.state.questionCounter} score={this.state.score} showScore={this.state.showScoreBoard} checkAnswer={this.checkAnswer.bind(this)}/>
           }}
         />
 
@@ -71,4 +83,4 @@ class GameContainer extends Component {
 
 }
 
-export default withRouter(GameContainer);
+export default GameContainer;
