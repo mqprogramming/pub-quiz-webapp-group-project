@@ -56,31 +56,23 @@ class GameView extends Component {
 
       const allAnswers = this.getAllAnswers();
 
-
-      for (const answer of allAnswers){
-        
+      const answersArray = [];
+      for (const [index, answer] of allAnswers.entries()){
+        answersArray.push(
+          <div key={index}>
+            <input value="Answer" type="radio" name="response" />
+            <label>{allAnswers[index]}</label>
+            <br></br>
+          </div>
+        )
       }
 
       return (
         <>
           <h3>{this.props.questions[0].question}</h3>
           <form>
-            <input value="Answer1" type="radio" name="response" />
-            <label>{allAnswers[0]}</label>
-            <br></br>
-
-            <input value="Answer2" type="radio" name="response" />
-            <label>{allAnswers[1]}</label>
-            <br></br>
-
-            <input value="Answer3" type="radio" name="response" />
-            <label>{allAnswers[2]}</label>
-            <br></br>
-
-            <input value="Answer4" type="radio" name="response" />
-            <label>{allAnswers[3]}</label>
+            {answersArray}
           </form>
-          <button onClick={this.getAllAnswers}>Mairi's All Answers Button</button>
         </>
       )
     }
