@@ -21,7 +21,9 @@ html, body {
   padding: 0;
 }
 
-
+a{
+  text-decoration: none;
+}
 
 #root {
   height: 100%;

@@ -41,7 +41,7 @@ class MainMenu extends Component {
           </Grid>
 
           <Grid item>
-            <Link to="/game/generate-quiz" style={{ textDecoration: 'none'}}>
+            <Link to="/game/generate-quiz">
                 <Button variant="contained" color="primary">Start Game</Button>
             </Link>
           </Grid>
