@@ -8,6 +8,7 @@ class GameView extends Component {
 
     this.getAllAnswers = this.getAllAnswers.bind(this);
     this.shuffle = this.shuffle.bind(this);
+    this.parseHtmlEntities = this.parseHtmlEntities.bind(this);
     this.chooseAnswer = this.chooseAnswer.bind(this);
   }
 
@@ -22,15 +23,32 @@ class GameView extends Component {
     return a;
   }
 
+  parseHtmlEntities(str) {
+    const regexApo = /(&#039;)/g
+    const regexLt = /(&lt;)/g
+    const regexGt = /(&gt;)/g
+    const regexQuot = /(&quot;)/g
+    const regexAmp = /(&amp;)/g
+    
+    let str1 = str.replace(regexApo, "\'");
+    let str2 = str1.replace(regexLt, "<");
+    let str3 = str2.replace(regexGt, ">");
+    let str4 = str3.replace(regexQuot, "\"");
+    let str5 = str4.replace(regexAmp, "&");
+    return str5;
+  } 
+
   getAllAnswers(){
     let allAnswers = [];
-    allAnswers.push(this.props.questions[this.props.questionCounter].correct_answer);
+    const answer = this.parseHtmlEntities(this.props.questions[this.props.questionCounter].correct_answer);
+    allAnswers.push(answer);
 
     let incorrectAnswers = this.props.questions[this.props.questionCounter].incorrect_answers;
     for (const incorrectAnswer of incorrectAnswers) {
-      allAnswers.push(incorrectAnswer);
+      const answer = this.parseHtmlEntities(incorrectAnswer);
+      allAnswers.push(answer);
     }
-    
+  
     return this.shuffle(allAnswers);
   }
 
@@ -75,7 +93,7 @@ class GameView extends Component {
 
       return (
         <>
-          <h3>{this.props.questions[this.props.questionCounter].question}</h3>
+          <h3>{this.parseHtmlEntities(this.props.questions[this.props.questionCounter].question)}</h3>
           <form>
             {answersArray}
           </form>

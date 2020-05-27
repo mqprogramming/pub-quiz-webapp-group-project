@@ -1,4 +1,3 @@
-import { withRouter } from 'react-router'
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -14,14 +13,12 @@ class GameContainer extends Component {
       numberOfQuestions: 1,
       questions: [],
       questionCounter: 0,
-      // currentQuestion: {},
-      // usedQuestions: [],
+
       score: 0,
       showPlayQuizButton: false,
       showScoreBoard: false
     }
     this.fetchQuestions = this.fetchQuestions.bind(this);
-    // this.replaceQuestion = this.replaceQuestion.bind(this);
     this.checkAnswer = this.checkAnswer.bind(this);
     this.changeNumberOfQuestionsRequested = this.changeNumberOfQuestionsRequested.bind(this);
   }
@@ -39,38 +36,28 @@ class GameContainer extends Component {
     .then((data) => {
       this.setState({ questions: data.results})
     })
-    // .then(this.props.history.push('/game/play-quiz'))
     .then((more) => (this.setState({ showPlayQuizButton: true })))
   }
 
-  // replaceQuestion(){
-  //   this.state.usedQuestions.add(this.state.currentQuestion);
-
-  //   for (const question in this.state.questions){
-  //     if (this.state.usedQuestions.find(someQuestion => someQuestion !== question)) {
-  //       this.setState({ currentQuestion: question })
-  //     }
-  //   }
-  // }
-
   checkAnswer(answer) {
-    if (this.state.questions[this.state.questionCounter].correct_answer === answer) {
-      console.log("correct!")
-      const newScore = this.state.score + 1;
-      this.setState({ score: newScore })
-    }
-    const newCounter = this.state.questionCounter + 1;
-    this.setState({ questionCounter: newCounter })
+    if (this.state.questionCounter < this.state.questions.length){
+      if (this.state.questions[this.state.questionCounter].correct_answer === answer) {
+        const newScore = this.state.score + 1;
+        this.setState({ score: newScore })
+      }
+      const newCounter = this.state.questionCounter + 1;
+      this.setState({ questionCounter: newCounter })
 
-    this.setState({ showScoreBoard: true })
-  }
+      this.setState({ showScoreBoard: true })
+    }
+  } 
   
   render(){
     return(
       <Router>
         <Route path="/game/play-quiz"
           render={(props) => {
-            return <GameView questions={this.state.questions} questionCounter={this.state.questionCounter} score={this.state.score} showScore={this.state.showScoreBoard} checkAnswer={this.checkAnswer.bind(this)}/>
+            return <GameView questions={this.state.questions} questionCounter={this.state.questionCounter} score={this.state.score} showScore={this.state.showScoreBoard} checkAnswer={this.checkAnswer.bind(this)} />
           }}
         />
 
@@ -87,3 +74,25 @@ class GameContainer extends Component {
 }
 
 export default GameContainer;
+
+/*
+
+function parseHtmlEnteties(str) {
+    return str.replace(/&#([0-9]{1,3});/gi, function(match, numStr) {
+        var num = parseInt(numStr, 10); // read num as normal number
+        return String.fromCharCode(num);
+    });
+}
+
+*/
+
+/*
+
+(str) => {
+  return str.replace(/&#([0-9]{1,3});/gi, function(match, numStr) {
+      var num = parseInt(numStr, 10);
+        return String.fromCharCode(num);
+    });
+}
+
+*/
