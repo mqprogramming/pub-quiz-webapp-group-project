@@ -41,9 +41,9 @@ class ScoreBoard extends Component {
         quipArray.push(<Typography variant="subtitle1" key="key">Bit of a trivia fiend, aren't you, {this.props.userName}!</Typography>)
         quipArray.push(<Typography variant="subtitle1" key="key">Wow, I'm actually fairly impressed with you, {this.props.userName}!</Typography>)
     } else if (percentage >= 0.9) {
-        quipArray.push(<h3 key="key">You're a trivia god, {this.props.userName}! Join my pub quiz team, we're calling it "{this.props.userName} Is Our Lord And Saviour"!!!</h3>)
-        quipArray.push(<h3 key="key">I love you, {this.props.userName}!!! 😍</h3>)
-        quipArray.push(<h3 key="key">Insane performance, {this.props.userName}!!</h3>)
+        quipArray.push(<Typography variant="subtitle1" key="key">You're a trivia god, {this.props.userName}! Join my pub quiz team, we're calling it "{this.props.userName} Is Our Lord And Saviour"!!!</Typography>)
+        quipArray.push(<Typography variant="subtitle1" key="key">I love you, {this.props.userName}!!! 😍</Typography>)
+        quipArray.push(<Typography variant="subtitle1" key="key">Insane performance, {this.props.userName}!!</Typography>)
     }
 
     const GradientButton = styled(Button)({
@@ -58,22 +58,22 @@ class ScoreBoard extends Component {
 
     return (
       <>
-        <Grid container direction="column" spacing={4} align="center" justify="center" style={{ backgroundColor: '#FAEDCA' }} >
+        <Grid container direction="column" spacing={4} align="center" justify="center" style={{ background: 'linear-gradient(to right bottom, #5ebab0, #6dc4d1, #8ecdea, #b5d4f8, #dadbfe, #e2d9fc, #ebd8f8, #f2d6f4, #e8c9ec, #ddbce4, #d3afdc, #c8a3d4)' }} >
 
             <Grid item>
-            <Typography variant="h4">Final Score</Typography>
+              <Typography variant="h4">Final Score</Typography>
             </Grid>
 
             <Grid item>
-                <Typography variant="h2">{this.props.score}/{this.props.numberOfQuestions}</Typography>
+              <Typography variant="h2">{this.props.score}/{this.props.numberOfQuestions}</Typography>
             </Grid>
             
             <Grid item>
-            <Typography variant="h6"> {quipArray[Math.floor(Math.random() * quipArray.length)]}</Typography>
+              <Typography variant="h6"> {quipArray[Math.floor(Math.random() * quipArray.length)]}</Typography>
             </Grid>
 
             <Grid item>
-                <GradientButton onClick={this.onPlayAgain.bind(this)} type="button">Play Again</GradientButton>
+              <GradientButton onClick={this.onPlayAgain.bind(this)} type="button">Play Again</GradientButton>
             </Grid>
         </Grid>
       </>

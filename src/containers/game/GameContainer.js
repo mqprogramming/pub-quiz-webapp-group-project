@@ -15,9 +15,11 @@ class GameContainer extends Component {
       numberOfQuestions: 1,
       questions: [],
       questionCounter: 0,
+      previousCorrectAnswer: "",
       
       categories: [],
       category: "",
+      difficulty: "",
 
       score: 0,
       showPlayQuizButton: false
@@ -48,10 +50,16 @@ class GameContainer extends Component {
     )
   }
 
+  handleDifficulty(event){
+    this.setState(
+      { difficulty: event.currentTarget.value}
+    )
+  }
+
   fetchQuestions(event) {
     event.preventDefault();
     const request = new Request();
-    request.get(`https://opentdb.com/api.php?amount=${this.state.numberOfQuestions}&category=${this.state.category}`)
+    request.get(`https://opentdb.com/api.php?amount=${this.state.numberOfQuestions}&category=${this.state.category}&difficulty=${this.state.difficulty}`)
     .then((data) => {
       this.setState({ questions: data.results})
     })
@@ -65,7 +73,12 @@ class GameContainer extends Component {
         this.setState({ score: newScore })
       }
       const newCounter = this.state.questionCounter + 1;
-      this.setState({ questionCounter: newCounter })
+      const correctAnswerWas = "The correct answer was: "
+      const previousAnswer = correctAnswerWas.concat(this.state.questions[this.state.questionCounter].correct_answer);
+      this.setState({ 
+        questionCounter: newCounter,
+        previousCorrectAnswer: previousAnswer
+      })
     }
 
   }
@@ -75,6 +88,10 @@ class GameContainer extends Component {
       numberOfQuestions: 1,
       questions: [],
       questionCounter: 0,
+      previousCorrectAnswer: "",
+
+      category: "",
+      difficulty: "",
 
       score: 0,
       showPlayQuizButton: false
@@ -92,6 +109,7 @@ class GameContainer extends Component {
             questionCounter={this.state.questionCounter}
             score={this.state.score}
             showScore={this.state.showScoreBoard}
+            previousCorrectAnswer={this.state.previousCorrectAnswer}
             checkAnswer={this.checkAnswer.bind(this)} />
           }}
         />
@@ -104,6 +122,7 @@ class GameContainer extends Component {
               reveal={this.state.showPlayQuizButton}
               categories={this.state.categories}
               onCategorySelect={this.handleCategory.bind(this)}
+              onDifficultySelect={this.handleDifficulty.bind(this)}
               />
           }}
         />

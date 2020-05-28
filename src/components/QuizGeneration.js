@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Typography, Slider, Grid, Box, Button } from '@material-ui/core';
-import { styled, makeStyles } from '@material-ui/core/styles';
-import { InputLabel, MenuItem, FormHelperText, FormControl, Select } from '@material-ui/core';
+import { Typography, Slider, Grid, Box, Button, ButtonGroup } from '@material-ui/core';
+import { styled } from '@material-ui/core/styles';
 
 class QuizGeneration extends Component {
   
@@ -10,14 +9,19 @@ class QuizGeneration extends Component {
     super(props);
     this.handleNumberOfQuestionsChange = this.handleNumberOfQuestionsChange.bind(this);
     this.handleCategory = this.handleCategory.bind(this);
+    this.handleDifficulty = this.handleDifficulty.bind(this);
   }
 
   handleNumberOfQuestionsChange(event, value){
     this.props.handleSliderChange(value)
   }
 
-  handleCategory(value){
-    this.props.onCategorySelect(value)
+  handleCategory(event){
+    this.props.onCategorySelect(event)
+  }
+
+  handleDifficulty(value){
+    this.props.onDifficultySelect(value)
   }
 
   render(){
@@ -32,19 +36,27 @@ class QuizGeneration extends Component {
       padding: '0 30px',
     });
 
+    const GradientButtonTwo = styled(Button)({
+      background: '#2196F3',
+      boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+      color: 'white',
+      height: 35,
+      padding: '0 30px',
+    });
+
     if (this.props.reveal === false) {
 
       const categoryArray = [];
+      categoryArray.push(<option key="key" value="">Random</option>);
       for (const category of this.props.categories) {
         categoryArray.push(
-          <option value={category.id}>{category.name}</option>
+          <option key={category.id} value={category.id}>{category.name}</option>
         ); 
       }
 
-
       return (
         <>
-          <Grid container direction="column" spacing={2} align="center" justify="center" style={{ backgroundColor: '#FAEDCA' }} >
+          <Grid container direction="column" spacing={2} align="center" justify="center" style={{ background: 'linear-gradient(to right bottom, #5ebab0, #6dc4d1, #8ecdea, #b5d4f8, #dadbfe, #e2d9fc, #ebd8f8, #f2d6f4, #e8c9ec, #ddbce4, #d3afdc, #c8a3d4)' }}>
 
             <Grid item>
                 <Box pb={3}>
@@ -70,11 +82,23 @@ class QuizGeneration extends Component {
             </Grid>
             
             <Grid item >
-              <Box pb={4}>
-                <Typography variant="subtitle1"><label for="category">Choose a Category:</label></Typography>
+              <Box pb={3}>
+                <Typography variant="subtitle1"><label>Category</label></Typography>
                 <select name="category" id="category" onChange={this.handleCategory}>
                   {categoryArray}
                 </select>
+              </Box>
+            </Grid>
+
+            <Grid item >
+              <Box pb={3}>
+                <Typography variant="subtitle1"><label>Difficulty</label></Typography>
+                <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+                  <GradientButtonTwo value="easy" onClick={this.handleDifficulty}>Easy</GradientButtonTwo>
+                  <GradientButtonTwo value="medium" onClick={this.handleDifficulty}>Medium</GradientButtonTwo>
+                  <GradientButtonTwo value="hard" onClick={this.handleDifficulty}>Hard</GradientButtonTwo>
+                  <GradientButtonTwo value="" onClick={this.handleDifficulty}>Varying</GradientButtonTwo>
+                </ButtonGroup>
               </Box>
             </Grid>
 
@@ -88,7 +112,7 @@ class QuizGeneration extends Component {
     } else {
       return (
         <>
-          <Grid container direction="column" spacing={4} align="center" justify="center" style={{ backgroundColor: '#FAEDCA' }} >
+          <Grid container direction="column" spacing={4} align="center" justify="center" style={{ background: 'linear-gradient(to right bottom, #5ebab0, #6dc4d1, #8ecdea, #b5d4f8, #dadbfe, #e2d9fc, #ebd8f8, #f2d6f4, #e8c9ec, #ddbce4, #d3afdc, #c8a3d4)' }} >
 
             <Grid item>
                 <Typography variant="h3">Let's Play!</Typography>

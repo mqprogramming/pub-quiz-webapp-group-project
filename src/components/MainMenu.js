@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {Typography, Button, Grid, TextField} from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import ParticlesBg from "particles-bg";
 
 
 class MainMenu extends Component {
@@ -30,12 +31,11 @@ class MainMenu extends Component {
     });
 
     return(
-      <>
+      <React.Fragment>
+        <Grid container direction="column" spacing={5} align="center" justify="center">
 
-        <Grid container direction="column" spacing={5} align="center" justify="center" style={{ backgroundColor: '#FAEDCA' }} >
-
-        <Grid item>
-            <Typography variant="h3">Pub Quiz Main Menu</Typography>
+          <Grid item>
+              <Typography variant="h3">Pub Quiz Game</Typography>
           </Grid>
 
           <Grid item> 
@@ -51,7 +51,8 @@ class MainMenu extends Component {
           </Grid>
 
         </Grid>
-      </>
+        <ParticlesBg type="polygon" bg={true}/>
+      </React.Fragment>
     )
   }    
 }
