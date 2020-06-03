@@ -2,6 +2,7 @@ import { withRouter } from 'react-router'
 import React, { Component } from 'react';
 import {Typography, Grid, Button} from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
+import ParticlesBg from "particles-bg";
 
 class ScoreBoard extends Component {
 
@@ -58,7 +59,7 @@ class ScoreBoard extends Component {
 
     return (
       <>
-        <Grid container direction="column" spacing={4} align="center" justify="center" style={{ background: 'linear-gradient(to right bottom, #5ebab0, #6dc4d1, #8ecdea, #b5d4f8, #dadbfe, #e2d9fc, #ebd8f8, #f2d6f4, #e8c9ec, #ddbce4, #d3afdc, #c8a3d4)' }} >
+        <Grid container direction="column" spacing={4} align="center" justify="center" >
 
             <Grid item>
               <Typography variant="h4">Final Score</Typography>
@@ -76,6 +77,7 @@ class ScoreBoard extends Component {
               <GradientButton onClick={this.onPlayAgain.bind(this)} type="button">Play Again</GradientButton>
             </Grid>
         </Grid>
+        <ParticlesBg type="circle" bg={true} />
       </>
     )
   }
